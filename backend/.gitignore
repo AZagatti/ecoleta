@@ -4,6 +4,7 @@ node_modules/
 build/
 coverage
 .env
+db.sqlite
 ormconfig.json
 
 tmp/*
