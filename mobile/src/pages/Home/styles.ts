@@ -1,5 +1,6 @@
 import styled from "styled-components/native";
 import { RectButton } from "react-native-gesture-handler";
+import RNPickerSelect from 'react-native-picker-select';
 
 export const Container = styled.ImageBackground.attrs({
   source: require("../../assets/home-background.png"),
@@ -38,7 +39,7 @@ export const Footer = styled.View``;
 
 export const Select = styled.View``;
 
-export const Input = styled.TextInput`
+export const Input = styled(RNPickerSelect)`
   height: 60px;
   background-color: #fff;
   border-radius: 10px;
