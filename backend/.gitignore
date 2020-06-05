@@ -7,5 +7,5 @@ coverage
 db.sqlite
 ormconfig.json
 
-tmp/*
-!tmp/.gitkeep
+uploads/points/*
+!uploads/points/.gitkeep

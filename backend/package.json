@@ -7,15 +7,19 @@
     "dev": "ts-node-dev --no-notify --transpileOnly --ignore-watch node_modules src/server.ts"
   },
   "dependencies": {
+    "celebrate": "^12.1.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "knex": "^0.21.1",
+    "multer": "^1.4.2",
     "sqlite3": "^4.2.0",
     "uuidv4": "^6.1.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.6",
+    "@types/hapi__joi": "^17.1.2",
+    "@types/multer": "^1.4.3",
     "ts-node": "^8.10.2",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.9.3"
