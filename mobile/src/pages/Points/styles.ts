@@ -7,6 +7,11 @@ interface Item {
   selected?: boolean;
 }
 
+export const SafeArea = styled.SafeAreaView`
+  flex: 1;
+  background-color: ${({ theme }) => theme.colors.background};
+`;
+
 export const Container = styled.View`
   flex: 1;
   padding: 0 32px;
@@ -15,14 +20,20 @@ export const Container = styled.View`
     : 20}px;
 `;
 
+export const Header = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
 export const Title = styled.Text`
   font-size: 20px;
   font-family: "Ubuntu_700Bold";
   margin-top: 24px;
+  color: ${({ theme }) => theme.colors.title};
 `;
 
 export const Description = styled.Text`
-  color: #6c6c80;
+  color: ${({ theme }) => theme.colors.text};
   font-size: 16px;
   margin-top: 4px;
   font-family: "Roboto_400Regular";
@@ -49,7 +60,7 @@ export const MapMarker = styled(Marker)`
 export const MapMarkerContainer = styled.View`
   width: 90px;
   height: 70px;
-  background-color: #34cb79;
+  background-color: ${({ theme }) => theme.colors.green};
   flex-direction: column;
   border-radius: 8px;
   overflow: hidden;
@@ -66,9 +77,18 @@ export const MapMarkerImage = styled.Image.attrs({
 export const MapMarkerTitle = styled.Text`
   flex: 1;
   font-family: "Roboto_400Regular";
-  color: #fff;
+  color: ${({ theme }) => theme.colors.invertText};
   font-size: 13px;
   line-height: 23px;
+`;
+
+export const Scroll = styled.ScrollView.attrs({
+  horizontal: true,
+  showsHorizontalScrollIndicator: false,
+  contentContainerStyle: {
+    paddingHorizontal: 20,
+  },
+})`
 `;
 
 export const ItemsContainer = styled.View`
@@ -78,9 +98,9 @@ export const ItemsContainer = styled.View`
 `;
 
 export const Item = styled.TouchableOpacity<Item>`
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.colors.invertText};
   border-width: 2px;
-  border-color: #eee;
+  border-color: ${({ theme }) => theme.colors.gray};
   height: 120px;
   width: 120px;
   border-radius: 8px;
@@ -94,7 +114,7 @@ export const Item = styled.TouchableOpacity<Item>`
   ${(props) =>
     props.selected &&
     css`
-      border-color: #34cb79;
+      border-color: ${({ theme }) => theme.colors.green};
       border-width: 2px;
     `}
 `;
@@ -103,4 +123,5 @@ export const ItemTitle = styled.Text`
   font-family: "Roboto_400Regular";
   text-align: center;
   font-size: 13px;
+  color: ${({ theme }) => theme.colors.text};
 `;

@@ -1,16 +1,27 @@
 import styled from "styled-components/native";
 import { RectButton } from "react-native-gesture-handler";
-import RNPickerSelect from 'react-native-picker-select';
+import RNPickerSelect from "react-native-picker-select";
 
-export const Container = styled.ImageBackground.attrs({
-  source: require("../../assets/home-background.png"),
+export const Container = styled.ImageBackground.attrs(({ theme }) => ({
+  source:
+    theme.title === "light"
+      ? require("../../assets/home-background.png")
+      : require("../../assets/home-background-dark.png"),
   imageStyle: {
     width: 274,
     height: 368,
   },
-})`
+}))`
   flex: 1;
   padding: 32px;
+  background-color: ${({ theme }) => theme.colors.background};
+`;
+
+export const Header = styled.View`
+  position: absolute;
+  right: 32px;
+  top: 64px;
+  z-index: 5;
 `;
 
 export const Main = styled.View`
@@ -19,7 +30,7 @@ export const Main = styled.View`
 `;
 
 export const Title = styled.Text`
-  color: #322153;
+  color: ${({ theme }) => theme.colors.title};
   font-size: 32px;
   font-family: "Ubuntu_700Bold";
   max-width: 260px;
@@ -27,7 +38,7 @@ export const Title = styled.Text`
 `;
 
 export const Description = styled.Text`
-  color: #6c6c80;
+  color: ${({ theme }) => theme.colors.text};
   font-size: 16px;
   margin-top: 16px;
   font-family: "Roboto_400Regular";
@@ -41,7 +52,7 @@ export const Select = styled.View``;
 
 export const Input = styled(RNPickerSelect)`
   height: 60px;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.colors.invertText};
   border-radius: 10px;
   margin-bottom: 8px;
   padding: 0 24px;
@@ -49,7 +60,7 @@ export const Input = styled(RNPickerSelect)`
 `;
 
 export const Button = styled(RectButton)`
-  background-color: #34cb79;
+  background-color: ${({ theme }) => theme.colors.green};
   height: 60px;
   flex-direction: row;
   border-radius: 10px;
@@ -70,7 +81,7 @@ export const ButtonText = styled.Text`
   flex: 1;
   justify-content: center;
   text-align: center;
-  color: #fff;
+  color: ${({ theme }) => theme.colors.invertText};
   font-family: "Roboto_500Medium";
   font-size: 16px;
 `;

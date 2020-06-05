@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "Ecoleta",
+    "slug": "Ecoleta",
+    "userInterfaceStyle": "automatic",
     "platforms": [
       "ios",
       "android",

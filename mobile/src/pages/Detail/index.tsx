@@ -1,9 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { SafeAreaView, Linking } from "react-native";
+import { Linking } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather as Icon, FontAwesome } from "@expo/vector-icons";
 import * as MailCompose from "expo-mail-composer";
+
+import useTheme from '../../hooks/theme';
+import useCustomTheme from '../../hooks/customTheme';
 
 import api from "../../services/api";
 
@@ -28,6 +31,8 @@ interface Data {
 }
 
 const Detail: React.FC = () => {
+  const themeContext = useTheme();
+  const { handleChangeTheme } = useCustomTheme();
   const navigation = useNavigation();
   const route = useRoute();
   const routeParams = route.params as RouteParams;
@@ -66,11 +71,21 @@ const Detail: React.FC = () => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <S.SafeArea>
       <S.Container>
-        <TouchableOpacity onPress={handleNavigateBack}>
-          <Icon name="arrow-left" size={20} color="#34cb79" />
-        </TouchableOpacity>
+        <S.Header>
+          <TouchableOpacity onPress={handleNavigateBack}>
+            <Icon name="arrow-left" size={20} color={themeContext.colors.green} />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={handleChangeTheme}>
+            <Icon
+              name={themeContext.title === "dark" ? "sun" : "moon"}
+              size={20}
+              color={themeContext.colors.theme}
+            />
+          </TouchableOpacity>
+        </S.Header>
 
         <S.PointImage
           source={{
@@ -92,16 +107,20 @@ const Detail: React.FC = () => {
       </S.Container>
       <S.Footer>
         <S.Button onPress={handleWhatsapp}>
-          <FontAwesome name="whatsapp" size={20} color="#fff" />
+          <FontAwesome
+            name="whatsapp"
+            size={20}
+            color={themeContext.colors.invertText}
+          />
           <S.ButtonText>Whatsapp</S.ButtonText>
         </S.Button>
 
         <S.Button onPress={handleComposeMail}>
-          <Icon name="mail" size={20} color="#fff" />
+          <Icon name="mail" size={20} color={themeContext.colors.invertText} />
           <S.ButtonText>E-mail</S.ButtonText>
         </S.Button>
       </S.Footer>
-    </SafeAreaView>
+    </S.SafeArea>
   );
 };
 

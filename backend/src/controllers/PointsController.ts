@@ -10,13 +10,37 @@ class PointsController {
       .split(",")
       .map((item) => item.trim());
 
-    const points = await knex("points")
-      .join("point_items", "points.id", "=", "point_items.point_id")
-      .whereIn("point_items.item_id", parsedItems)
-      .where("city", String(city))
-      .where("uf", String(uf))
-      .distinct()
-      .select("points.*");
+    let points;
+
+    if (!city && !uf) {
+      points = await knex("points")
+        .join("point_items", "points.id", "=", "point_items.point_id")
+        .whereIn("point_items.item_id", parsedItems)
+        .distinct()
+        .select("points.*");
+    } else if (!city && uf) {
+      points = await knex("points")
+        .join("point_items", "points.id", "=", "point_items.point_id")
+        .whereIn("point_items.item_id", parsedItems)
+        .where("uf", String(uf))
+        .distinct()
+        .select("points.*");
+    } else if (city && !uf) {
+      points = await knex("points")
+        .join("point_items", "points.id", "=", "point_items.point_id")
+        .whereIn("point_items.item_id", parsedItems)
+        .where("city", String(city))
+        .distinct()
+        .select("points.*");
+    } else if (city && uf) {
+      points = await knex("points")
+        .join("point_items", "points.id", "=", "point_items.point_id")
+        .whereIn("point_items.item_id", parsedItems)
+        .where("city", String(city))
+        .where("uf", String(uf))
+        .distinct()
+        .select("points.*");
+    }
 
     return res.json(points);
   }

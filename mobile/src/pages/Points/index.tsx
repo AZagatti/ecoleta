@@ -1,12 +1,18 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { SafeAreaView, Alert } from "react-native";
+import { Alert } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { Feather as Icon } from "@expo/vector-icons";
 import { SvgUri } from "react-native-svg";
 import * as Location from "expo-location";
+import { PROVIDER_GOOGLE,  } from "react-native-maps";
+
+import useTheme from "../../hooks/theme";
+import useCustomTheme from "../../hooks/customTheme";
 
 import api from "../../services/api";
+
+import { mapDarkStyle, mapStandardStyle } from "../../utils/mapStyle";
 
 import * as S from "./styles";
 
@@ -30,6 +36,8 @@ interface RouteParams {
 }
 
 const Points: React.FC = () => {
+  const themeContext = useTheme();
+  const { handleChangeTheme } = useCustomTheme();
   const navigation = useNavigation();
   const route = useRoute();
   const routeParams = route.params as RouteParams;
@@ -61,8 +69,8 @@ const Points: React.FC = () => {
     api
       .get("points", {
         params: {
-          city: routeParams.city,
-          uf: routeParams.uf,
+          city: routeParams.city === "0" ? null : routeParams.city,
+          uf: routeParams.uf === "0" ? null : routeParams.uf,
           items: selectedItems,
         },
       })
@@ -107,11 +115,25 @@ const Points: React.FC = () => {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <S.SafeArea>
       <S.Container>
-        <TouchableOpacity onPress={handleNavigateBack}>
-          <Icon name="arrow-left" size={20} color="#34cb79" />
-        </TouchableOpacity>
+        <S.Header>
+          <TouchableOpacity onPress={handleNavigateBack}>
+            <Icon
+              name="arrow-left"
+              size={20}
+              color={themeContext.colors.green}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={handleChangeTheme}>
+            <Icon
+              name={themeContext.title === "dark" ? "sun" : "moon"}
+              size={20}
+              color={themeContext.colors.theme}
+            />
+          </TouchableOpacity>
+        </S.Header>
 
         <S.Title>😃 Bem vindo.</S.Title>
         <S.Description>Encontre no mapa um mapa de coleta.</S.Description>
@@ -125,6 +147,10 @@ const Points: React.FC = () => {
                 latitudeDelta: 0.014,
                 longitudeDelta: 0.014,
               }}
+              customMapStyle={
+                themeContext.title === "dark" ? mapDarkStyle : mapStandardStyle
+              }
+              provider={PROVIDER_GOOGLE}
             >
               {points.map((point) => (
                 <S.MapMarker
@@ -150,13 +176,7 @@ const Points: React.FC = () => {
         </S.MapContainer>
       </S.Container>
       <S.ItemsContainer>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{
-            paddingHorizontal: 20,
-          }}
-        >
+        <S.Scroll>
           {items.map((item) => (
             <S.Item
               key={item.id}
@@ -168,9 +188,9 @@ const Points: React.FC = () => {
               <S.ItemTitle>{item.title}</S.ItemTitle>
             </S.Item>
           ))}
-        </ScrollView>
+        </S.Scroll>
       </S.ItemsContainer>
-    </SafeAreaView>
+    </S.SafeArea>
   );
 };
 

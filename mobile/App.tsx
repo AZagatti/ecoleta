@@ -1,30 +1,15 @@
 import React from "react";
-import { AppLoading } from 'expo';
-import { StatusBar } from "react-native";
-import { Roboto_400Regular, Roboto_500Medium } from "@expo-google-fonts/roboto";
-import { Ubuntu_700Bold, useFonts } from "@expo-google-fonts/ubuntu";
 
-import Routes from "./src/routes";
+import AppProvider from "./src/contexts";
 
-export default function App() {
-  const [fontsLoaded] = useFonts({
-    Roboto_400Regular,
-    Roboto_500Medium,
-    Ubuntu_700Bold,
-  });
+import ThemeChanger from "./src";
 
-  if (!fontsLoaded) {
-    return <AppLoading />
-  }
-
+const App: React.FC = () => {
   return (
-    <>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor="transparent"
-        translucent
-      />
-      <Routes />
-    </>
+    <AppProvider>
+      <ThemeChanger />
+    </AppProvider>
   );
-}
+};
+
+export default App;

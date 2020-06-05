@@ -5,11 +5,15 @@ import {
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
+  TouchableOpacity,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import RNPickerSelect from "react-native-picker-select";
+
+import useTheme from "../../hooks/theme";
+import useCustomTheme from "../../hooks/customTheme";
 
 import * as S from "./styles";
 
@@ -28,11 +32,34 @@ interface Item {
 
 const Home: React.FC = () => {
   const navigation = useNavigation();
+  const themeContext = useTheme();
+  const { handleChangeTheme } = useCustomTheme();
 
   const [uf, setUf] = useState("0");
   const [city, setCity] = useState("0");
   const [ufs, setUfs] = useState<Item[]>([]);
   const [cities, setCities] = useState<Item[]>([]);
+
+  const picker = StyleSheet.create({
+    inputIOS: {
+      height: 60,
+      color: themeContext.colors.text,
+      backgroundColor: themeContext.colors.invertText,
+      borderRadius: 10,
+      marginBottom: 8,
+      paddingHorizontal: 24,
+      fontSize: 16,
+    },
+    inputAndroid: {
+      height: 60,
+      color: themeContext.colors.text,
+      backgroundColor: themeContext.colors.invertText,
+      borderRadius: 10,
+      marginBottom: 8,
+      paddingHorizontal: 24,
+      fontSize: 16,
+    },
+  });
 
   useEffect(() => {
     axios
@@ -64,21 +91,41 @@ const Home: React.FC = () => {
   }, [uf]);
 
   const handleNavigateToPoints = useCallback(() => {
-    console.log({ uf, city });
     navigation.navigate("Points", {
       uf,
       city,
     });
-  }, []);
+  }, [uf, city]);
 
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : undefined}
-      style={{ flex: 1 }}
+      style={{ flex: 1, position: "relative" }}
     >
       <S.Container>
+        <S.Header>
+          <TouchableOpacity
+            onPress={() => {
+              handleChangeTheme();
+              console.log("teste");
+            }}
+          >
+            <Feather
+              name={themeContext.title === "dark" ? "sun" : "moon"}
+              size={20}
+              color={themeContext.colors.theme}
+            />
+          </TouchableOpacity>
+        </S.Header>
+
         <S.Main>
-          <Image source={require("../../assets/logo.png")} />
+          <Image
+            source={
+              themeContext.title === "light"
+                ? require("../../assets/logo.png")
+                : require("../../assets/logo-dark.png")
+            }
+          />
           <View>
             <S.Title>Seu marketplace de coleta de resíduos</S.Title>
             <S.Description>
@@ -111,7 +158,11 @@ const Home: React.FC = () => {
           />
           <S.Button onPress={handleNavigateToPoints}>
             <S.ButtonIcon>
-              <Feather name="arrow-right" color="#fff" size={24} />
+              <Feather
+                name="arrow-right"
+                color={themeContext.colors.invertText}
+                size={24}
+              />
             </S.ButtonIcon>
             <S.ButtonText>Entrar</S.ButtonText>
           </S.Button>
@@ -122,22 +173,3 @@ const Home: React.FC = () => {
 };
 
 export default Home;
-
-const picker = StyleSheet.create({
-  inputIOS: {
-    height: 60,
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    marginBottom: 8,
-    paddingHorizontal: 24,
-    fontSize: 16,
-  },
-  inputAndroid: {
-    height: 60,
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    marginBottom: 8,
-    paddingHorizontal: 24,
-    fontSize: 16,
-  },
-});
