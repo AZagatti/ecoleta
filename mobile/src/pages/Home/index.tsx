@@ -107,7 +107,6 @@ const Home: React.FC = () => {
           <TouchableOpacity
             onPress={() => {
               handleChangeTheme();
-              console.log("teste");
             }}
           >
             <Feather
@@ -137,6 +136,7 @@ const Home: React.FC = () => {
 
         <S.Footer>
           <RNPickerSelect
+            useNativeAndroidPickerStyle={false}
             style={picker}
             placeholder={{
               label: "Selecione um UF",
@@ -147,6 +147,7 @@ const Home: React.FC = () => {
             items={ufs}
           />
           <RNPickerSelect
+            useNativeAndroidPickerStyle={false}          
             style={picker}
             placeholder={{
               label: "Selecione uma cidade",
