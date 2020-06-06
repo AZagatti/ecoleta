@@ -1,17 +1,14 @@
 import React from "react";
-import { ToastContainer } from 'react-toastify';
 
-import Routes from "./routes";
+import ThemeChanger from './ThemeChanger';
 
-import 'react-toastify/dist/ReactToastify.css';
-import "./App.css";
+import AppProvider from "./contexts";
 
 function App() {
   return (
-    <>
-      <Routes />
-      <ToastContainer />
-    </>
+    <AppProvider>
+      <ThemeChanger />
+    </AppProvider>
   );
 }
 
