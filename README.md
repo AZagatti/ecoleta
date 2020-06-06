@@ -65,7 +65,7 @@ The mobile application is where people select what type of waste they want to de
 <br/>
 Available for Android and iOS.
 
-  <img width="250" src="https://res.cloudinary.com/zagatti/image/upload/v1591461653/readme/ecoleta-android_oj9zd6.gif" />
+  <img width="250" src="https://res.cloudinary.com/zagatti/image/upload/v1591463055/readme/ecoleta-android_qlflwp.gif" />
   <img width="258" src="https://res.cloudinary.com/zagatti/image/upload/v1591461653/readme/ecoleta-iphone_yy8sdv.gif" />
 </div>
 
